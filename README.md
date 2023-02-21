@@ -45,6 +45,11 @@ docker-compose exec app vendor/bin/phpunit --testdox --colors ./tests/.
 ```
 once all tests pass it means everything is working as expected :)
 
+**Note:**: If you want to `SSH` into the container you will need to run the following command:
+```bash
+docker-compose exec app /bin/bash
+```
+
 ![alt text](https://github.com/YaronMiro/jsonDB/raw/main/tests/images/output.JPG "tests")
 
 
