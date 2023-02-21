@@ -48,7 +48,7 @@ once all tests pass it means everything is working as expected :) :rocket:
 docker-compose exec app /bin/bash
 ```
 
-![alt text](https://github.com/YaronMiro/jsonDB/raw/main/tests/images/output.JPG "tests")
+![alt text](./tests/images/output.JPG "tests")
 
 
 ## :loudspeaker: General notes.
