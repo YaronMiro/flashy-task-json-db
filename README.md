@@ -67,8 +67,14 @@ Since this is a home task I decided that on that aspect I will just add simple q
 **[PHP-DI 7](https://php-di.org/)**   
 The dependency injection container, This entire project is wired using dependency injection design pattern, for more info on how it works see the [official documentation](https://php-di.org/doc/).
 
+
+
+
+**[Json Stream Collection Parser](https://github.com/MAXakaWIZARD/JsonCollectionParser)**   
+Event-based parser for large JSON collections (consumes small amount of memory). Built on top of JSON Streaming Parser, for more info on how it works see the [official documentation](http://json-schema.org/).
+
 **[JSON Schema for PHP](https://github.com/justinrainbow/json-schema)**   
-PHP Implementation for validating JSON Structures against a given Schema, this is being used to declare a given Entity schema and also used to validate a given "Entity" record data as being valid or not, for more info on how it works see the [official documentation](http://json-schema.org/).
+PHP Implementation for validating JSON Structures against a given Schema, this is being used to declare a given Entity schema and also used to validate a given "Entity" record data as being valid or not, for more info on how it works see the [official documentation](https://github.com/MAXakaWIZARD/JsonCollectionParser#readme).
 
 **[Ramsey UUID](https://github.com/justinrainbow/json-schema)**   
 is a PHP library for generating and working with universally unique identifiers (UUIDs), being used to generate unique ID for an Entity new record, for more info on how it works see the [official documentation](https://uuid.ramsey.dev/).
