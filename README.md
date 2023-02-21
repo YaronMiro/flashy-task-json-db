@@ -54,14 +54,16 @@ docker-compose exec app /bin/bash
 ## :loudspeaker: General notes.
 
 **Error handling**   
-Since this is a home task I decided that on that aspect I will just throw plain `Error` (exception) according to the required bussing logic of the component in hand. on real life project I would have defined custom `Exception` and would have also added a dedicated service to handle errors across the entire system. I thought it is wiser to invest my effort and concentrate my focus on other aspects of the task.  
+Since this is a home task I decided that on that aspect I will just throw plain `Error` (exception) according to the required bussing logic of the component in hand. on real life project I would have defined custom `Exception` and would have also added a dedicated service to handle errors across the entire system, so I can concentrate my focus on other aspects of the task in a reasonable amount of time.   
 
 **Complex DB queries handling**   
-Since this is a home task I decided that on that aspect I will just add simple query mechanism for "create" | "select" | "update" for a given record, I thought it is wiser to invest my effort and concentrate my focus on other aspects of the task in a reasonable amount of time.   
+Since this is a home task I decided that on that aspect I will just add simple query mechanism for "create" | "select" | "update" for a given record, so I can concentrate my focus on other aspects of the task in a reasonable amount of time.
 
 **Handling efficient JSON File I/O Operations**   
-Since this is a home task I decided that on that aspect I will just add and handle the `read` process efficiently, by utilizing a stream
-read process that so it consumes small amount of memory while doing so and should handle large json files. of course it is also equally important to has an efficient mechanism as well to `write` the data back to file, but on that aspect I kept it simple so I can concentrate my focus on other aspects of the task in a reasonable amount of time. on real life project I would have handled the write process in an efficient manner that is aware to memory issues and data potential corruption and parallel writing scenario when writing to a "single source of truth" file.
+Since this is a home task I decided that on that aspect I will just handle the `reading` process efficiently, by utilizing a stream
+read process, it consumes a small amount of memory and should handle large json files. of course it is also equally important to have an efficient mechanism as well for `writing` the data back to file, but on that aspect I kept it simple, so I can concentrate my focus on other aspects of the task in a reasonable amount of time.   
+
+on real life project I would have handled the write process in an efficient manner that is aware to memory issues and data potential corruption and parallel writing scenario when writing to a "single source of truth" file.
 
 
 ## Vendor PHP packages used.   
