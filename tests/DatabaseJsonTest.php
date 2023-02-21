@@ -198,6 +198,7 @@ class DatabaseJsonTest extends TestCase {
         // Clear DB entities once test has ended.
         foreach ($this->entitiesNames as $entityName) {
             if ($entityName !== '' && $this->database->has($entityName)) {
+                //@KEEP DEBUG if ($entityName === 'test') continue;
                 $this->database->drop($entityName);
             }
         }

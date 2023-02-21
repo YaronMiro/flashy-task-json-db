@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use JsonCollectionParser\Parser;
+use Error;
 
 class JsonFileService {
     private $filePath;
@@ -31,18 +32,18 @@ class JsonFileService {
 
     public function deleteFile(): bool {
       if (!is_file($this->filePath)) {
-        throw new \Error('File does not exists');
+        throw new Error('File does not exists');
       }
       return unlink($this->filePath);
     }
 
     public function create($data = []) {
       if (is_file($this->filePath)) {
-        throw new \Error('File already exist');
+        throw new Error('File already exist');
       }
 
       if (!is_array($data)) {
-        throw new \Error('Data must be an array');
+        throw new Error('Data must be an array');
       }
 
       $jsonString = json_encode($data, JSON_PRETTY_PRINT);
@@ -91,29 +92,22 @@ class JsonFileService {
 
     private function getParsedJsonDataFromFile() {
       if (!is_file($this->filePath)) {
-        throw new \Error('File does not exist');
+        throw new Error('File does not exist');
       }
 
       $items = [];
       $this->jsonCollectionParser->parse(
         $this->filePath,
         function (array $item) use (&$items) {
-        $items[] = (object) $item;
+          $items[] = (object) $item;
       });
 
-      // print_r("\n");
-      // print_r("########################");
-      // print_r("\n");
-      // print_r($this->data);
-      // print_r("\n");
-      // print_r("########################");
-      // print_r("\n");
       return $items;
     }
 
     private function saveJsonDataToFile($jsonData) {
       if (!is_file($this->filePath)) {
-        throw new \Error('File does not exist');
+        throw new Error('File does not exist');
       }
 
       $jsonString = json_encode($jsonData, JSON_PRETTY_PRINT);
