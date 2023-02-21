@@ -12,7 +12,7 @@ The first reason was that it's easy to see **real examples** of the implementati
 
 All tests can be found under the `./tests` directory. On how to run the `tests` see the last step on the "Installation" section.   
 
-## Installation
+## :wrench: Installation
 
 All commands should be executed from with in the root directory.
 
@@ -43,7 +43,7 @@ In order to run the tests you will to run the following command:
 ```bash
 docker-compose exec app vendor/bin/phpunit --testdox --colors ./tests/.
 ```
-once all tests pass it means everything is working as expected :)
+once all tests pass it means everything is working as expected :) :rocket:
 
 **Note:**: If you want to `SSH` into the container you will need to run the following command:
 ```bash
