@@ -67,9 +67,6 @@ Since this is a home task I decided that on that aspect I will just add simple q
 **[PHP-DI 7](https://php-di.org/)**   
 The dependency injection container, This entire project is wired using dependency injection design pattern, for more info on how it works see the [official documentation](https://php-di.org/doc/).
 
-
-
-
 **[Json Stream Collection Parser](https://github.com/MAXakaWIZARD/JsonCollectionParser)**   
 Event-based parser for large JSON collections (consumes small amount of memory). Built on top of JSON Streaming Parser, for more info on how it works see the [official documentation](http://json-schema.org/).
 

@@ -31,9 +31,7 @@ class JsonFileService {
     }
 
     public function deleteFile(): bool {
-      if (!is_file($this->filePath)) {
-        throw new Error('File does not exists');
-      }
+      $this->ErrorOnFileNotExist();
       return unlink($this->filePath);
     }
 
@@ -91,9 +89,7 @@ class JsonFileService {
     }
 
     private function getParsedJsonDataFromFile() {
-      if (!is_file($this->filePath)) {
-        throw new Error('File does not exist');
-      }
+      $this->ErrorOnFileNotExist();
 
       $items = [];
       $this->jsonCollectionParser->parse(
@@ -106,12 +102,26 @@ class JsonFileService {
     }
 
     private function saveJsonDataToFile($jsonData) {
-      if (!is_file($this->filePath)) {
-        throw new Error('File does not exist');
-      }
+      $this->ErrorOnFileNotExist();
+      // $this->bufferJsonEncoder
+
+      // print_r("\n");
+      // print_r("########################");
+      // print_r("\n");
+      // print_r($items);
+      // print_r("\n");
+      // print_r("########################");
+      // print_r("\n");
+
 
       $jsonString = json_encode($jsonData, JSON_PRETTY_PRINT);
       file_put_contents($this->filePath, $jsonString);
+    }
+
+    private function ErrorOnFileNotExist() {
+      if (!is_file($this->filePath)) {
+        throw new Error('File does not exist');
+      }
     }
 
     private function getRecordIndexById($id, $jsonData) {
