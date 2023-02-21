@@ -64,7 +64,7 @@ Since this is a home task I decided that on that aspect I will just add and hand
 read process that so it consumes small amount of memory while doing so and should handle large json files. of course it is also equally important to has an efficient mechanism as well to `write` the data back to file, but on that aspect I kept it simple so I can concentrate my focus on other aspects of the task in a reasonable amount of time. on real life project I would have handled the write process in an efficient manner that is aware to memory issues and data potential corruption and parallel writing scenario when writing to a "single source of truth" file.
 
 
-## Vendors PHP packages used.   
+## Vendor PHP packages used.   
 
 **[PHP-DI 7](https://php-di.org/)**   
 The dependency injection container, This entire project is wired using dependency injection design pattern, for more info on how it works see the [official documentation](https://php-di.org/doc/).
