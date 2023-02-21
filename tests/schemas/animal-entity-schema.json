@@ -1,0 +1,29 @@
+{
+    "$id": "https://example.com/user.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "animal",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "The animal's unique identifier."
+      },
+      "creationTime": {
+        "type": "integer",
+        "description": "The creation time of the record"
+      },
+      "updateTime": {
+        "type": "integer",
+        "description": "The update time of the record"
+      },
+      "name": {
+        "type": "string",
+        "description": "The animal's name."
+      },
+      "type": {
+        "description": "The animal type.",
+        "type": "string"
+      }
+    },
+    "additionalProperties": false
+  }

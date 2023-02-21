@@ -1,0 +1,30 @@
+{
+    "$id": "https://example.com/user.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "user",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "description": "The user's unique identifier."
+      },
+      "creationTime": {
+        "type": "integer",
+        "description": "The creation time of the record"
+      },
+      "updateTime": {
+        "type": "integer",
+        "description": "The update time of the record"
+      },
+      "name": {
+        "type": "string",
+        "description": "The user's name."
+      },
+      "age": {
+        "description": "Age in years which must be equal to or greater than zero.",
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "additionalProperties": false
+  }

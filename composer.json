@@ -1,0 +1,23 @@
+{
+    "name": "flashy/task",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "App\\Services\\": "src/services/",
+            "App\\Database\\": "src/database/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ym"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "require": {
+        "justinrainbow/json-schema": "^5.2",
+        "php-di/php-di": "^6.4",
+        "ramsey/uuid": "^4.2"
+    }
+}
