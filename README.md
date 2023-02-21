@@ -6,9 +6,7 @@
 
 The other alternative is to use this project on a local environment that can run `php-7.4` and `Composer version 2.5.4`, the fastest and most simple way is to use docker to install and run the project.
 
-I also decided to add  Unit Tests using `PHPUnit`, these test covers all required functionally of the given task, this was done for 2 reasons.
-
-The first reason was that it's easy to see **real examples** of the implementation and **validate** that it works as expected, and the second was to enable me to test while developing and adjust the code without worrying too much about major changes while doing so. 
+I also decided to add  Unit Tests using `PHPUnit`, these test covers all required functionally of the given task, this was done for 2 reasons. The first reason was that it's easy to see **real examples** of the implementation and **validate** that it works as expected, and the second was to enable me to test while developing and adjust the code without worrying too much about major changes while doing so. 
 
 All tests can be found under the `./tests` directory. On how to run the `tests` see the last step on the "Installation" section.   
 
@@ -59,7 +57,11 @@ docker-compose exec app /bin/bash
 Since this is a home task I decided that on that aspect I will just throw plain `Error` (exception) according to the required bussing logic of the component in hand. on real life project I would have defined custom `Exception` and would have also added a dedicated service to handle errors across the entire system. I thought it is wiser to invest my effort and concentrate my focus on other aspects of the task.  
 
 **Complex DB queries handling**   
-Since this is a home task I decided that on that aspect I will just add simple query mechanism for "create" | "select" | "update" for a given record, I thought it is wiser to invest my effort and concentrate my focus on other aspects of the task.   
+Since this is a home task I decided that on that aspect I will just add simple query mechanism for "create" | "select" | "update" for a given record, I thought it is wiser to invest my effort and concentrate my focus on other aspects of the task in a reasonable amount of time.   
+
+**Handling**   
+Since this is a home task I decided that on that aspect I will just add and handle the `read` process efficiently, by utilizing a stream
+read process that so it consumes small amount of memory while doing so and should handle large json files. of course it is also equally important to has an efficient mechanism as well to `write` the data back to file, but on that aspect I kept it simple so I can concentrate my focus on other aspects of the task in a reasonable amount of time. on real life project I would have handled the write process in an efficient manner that is aware to memory issues and data potential corruption and parallel writing scenario when writing to a "single source of truth" file.
 
 
 ## Vendors PHP packages used.   
