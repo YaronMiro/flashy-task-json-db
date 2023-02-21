@@ -53,7 +53,7 @@ docker-compose exec app /bin/bash
 ![alt text](https://github.com/YaronMiro/jsonDB/raw/main/tests/images/output.JPG "tests")
 
 
-## General notes.
+## :loudspeaker: General notes.
 
 **Error handling**   
 Since this is a home task I decided that on that aspect I will just throw plain `Error` (exception) according to the required bussing logic of the component in hand. on real life project I would have defined custom `Exception` and would have also added a dedicated service to handle errors across the entire system. I thought it is wiser to invest my effort and concentrate my focus on other aspects of the task.  
