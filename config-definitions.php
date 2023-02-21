@@ -14,13 +14,13 @@ return [
     DatabaseInterface::class => DI\create(DatabaseJsonFile::class)
         ->constructor(
             __DIR__ . '/tests/mocks',
-            DI\create(JsonFileService::class),
+            DI\autowire(JsonFileService::class),
             DI\create(Validator::class),
             DI\factory([DIContainerService::class, 'getInstance']
         ),
     ),
     EntityModelInterface::class => DI\autowire(EntityModelJson::class)
-        ->constructorParameter('jsonFileService', DI\create(JsonFileService::class))
+        ->constructorParameter('jsonFileService', DI\autowire(JsonFileService::class))
         ->constructorParameter('validator', DI\create(Validator::class)
     ),
     DatabaseExporterInterface::class => DI\autowire(DatabaseExporter::class),

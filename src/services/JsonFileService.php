@@ -2,22 +2,34 @@
 
 namespace App\Services;
 
+use JsonCollectionParser\Parser;
+
 class JsonFileService {
     private $filePath;
+    private $jsonCollectionParser;
+
+    /**
+     * __construct
+     *
+     * @return void
+     */
+    public function __construct(Parser $jsonCollectionParser) {
+      $this->jsonCollectionParser = $jsonCollectionParser;
+    }
   
-    public function file($filePath) {
+    public function file($filePath): void {
       $this->filePath = trim($filePath);
     }
 
-    public function getFileName() {
+    public function getFileName(): string {
       return $this->filePath;
     }
 
-    public function fileExists() {
+    public function fileExists(): bool {
       return is_file($this->filePath);
     }
 
-    public function deleteFile() {
+    public function deleteFile(): bool {
       if (!is_file($this->filePath)) {
         throw new \Error('File does not exists');
       }
@@ -37,7 +49,7 @@ class JsonFileService {
       file_put_contents($this->filePath, $jsonString);
     }
     
-    public function read($id = null) {
+    public function read($id = null): array {
       $jsonData = $this->getParsedJsonDataFromFile();
 
       if (!is_null($id)) {
@@ -82,8 +94,21 @@ class JsonFileService {
         throw new \Error('File does not exist');
       }
 
-      $fileContents = file_get_contents($this->filePath);
-      return json_decode($fileContents);
+      $items = [];
+      $this->jsonCollectionParser->parse(
+        $this->filePath,
+        function (array $item) use (&$items) {
+        $items[] = (object) $item;
+      });
+
+      // print_r("\n");
+      // print_r("########################");
+      // print_r("\n");
+      // print_r($this->data);
+      // print_r("\n");
+      // print_r("########################");
+      // print_r("\n");
+      return $items;
     }
 
     private function saveJsonDataToFile($jsonData) {

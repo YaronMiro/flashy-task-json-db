@@ -9,6 +9,7 @@ class JsonFileServiceTest extends TestCase {
   private $jsonCRUD;
   private $mocksDirPath = __DIR__ . '/mocks';
   private $records = [];
+  private $jsonCollectionParser;
 
   protected function setUp(): void {
     $container = DIContainerService::getInstance()->getContainer();
@@ -63,7 +64,7 @@ class JsonFileServiceTest extends TestCase {
     $this->assertEquals($this->records, $this->jsonCRUD->read());
   }
 
- /**
+  /**
   * @test
   */
   public function read_one_item(): void {
@@ -71,7 +72,7 @@ class JsonFileServiceTest extends TestCase {
     $this->assertEquals($this->records[0], $this->jsonCRUD->read("1")[0]);
   }
 
- /**
+  /**
   * @test
   */
   public function add_one_item(): void {
@@ -83,7 +84,7 @@ class JsonFileServiceTest extends TestCase {
     $this->assertEquals($record, $this->jsonCRUD->read("4")[0]);
   }
 
- /**
+  /**
   * @test
   */
   public function update_one_item(): void {
@@ -94,7 +95,7 @@ class JsonFileServiceTest extends TestCase {
     $this->assertEquals($newRecord, $this->jsonCRUD->read("1")[0]);
   }
 
- /**
+  /**
   * @test
   */
   public function delete_one_item(): void {
