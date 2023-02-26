@@ -21,6 +21,10 @@ class JsonStreamHandler {
         file_put_contents($this->filePath, '');
     }
 
+    // public function create() {
+    //     file_put_contents($this->filePath, '');
+    // }
+
     public function parse($readCallback = null) {
 
         // Exit early in case we can't access the file.
@@ -31,12 +35,12 @@ class JsonStreamHandler {
         $this->readCallback = $readCallback;
         $this->fileHandle = fopen($this->filePath, 'r');
 
-        while (!feof($this->fileHandle)) {
+        while (is_resource($this->fileHandle) && !feof($this->fileHandle)) {
             $this->buffer .= fread($this->fileHandle, $this->chunkSize);
             $this->parseBuffer();
         }
 
-        fclose($this->fileHandle);
+        $this->close($this->fileHandle);
     }
 
     public function close(){
@@ -69,7 +73,7 @@ class JsonStreamHandler {
     public function write(object $data) {
         $handle = fopen($this->filePath, 'a');
         fwrite($handle, json_encode($data) . "\n");
-        fclose($handle);
+        $this->close($handle);
     }
   
     public function update($id, $patch) {
@@ -155,6 +159,7 @@ class JsonStreamHandlerTest extends TestCase {
             }
         };
 
+        
         $fileHandler->parse($readCallback);
         $this->assertEquals((object) $this->users[1], $targetUser);
     }
