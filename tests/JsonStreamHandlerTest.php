@@ -141,8 +141,7 @@ class JsonStreamHandlerTest extends TestCase {
 
         $this->fileHandler->write($obj);
 
-        $contents = file_get_contents($this->filePath);
-        $lines = explode("\n", trim($contents));
+        $lines = file($this->filePath, FILE_IGNORE_NEW_LINES);
 
         $this->assertCount(4, $lines);
         $this->assertEquals($obj, json_decode($lines[3]));
