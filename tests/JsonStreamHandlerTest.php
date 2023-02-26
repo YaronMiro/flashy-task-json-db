@@ -13,22 +13,22 @@ class JsonStreamHandler {
     private $readCallback;
     private $chunkSize = 8192; // 8KB by default, you can change this to any value
   
-    public function __construct($filePath, $readCallback = null) {
+    public function __construct($filePath) {
         $this->filePath = $filePath;
-        $this->readCallback = $readCallback;
     }
 
     public function create() {
         file_put_contents($this->filePath, '');
     }
 
-    public function parse() {
+    public function parse($readCallback = null) {
 
         // Exit early in case we can't access the file.
         if (!is_file($this->filePath)) {
             return;
         }
 
+        $this->readCallback = $readCallback;
         $this->fileHandle = fopen($this->filePath, 'r');
 
         while (!feof($this->fileHandle)) {
@@ -38,7 +38,14 @@ class JsonStreamHandler {
 
         fclose($this->fileHandle);
     }
-  
+
+    public function close(){
+        if (is_resource($this->fileHandle)){
+            fclose($this->fileHandle);
+            $this->fileHandle = null;
+            $this->buffer = false;
+        }
+    }
 
     private function parseBuffer() {
         while (($pos = strpos($this->buffer, "\n")) !== false) {
@@ -50,7 +57,7 @@ class JsonStreamHandler {
                 return;
             }
   
-            $data = json_decode($jsonString, true);
+            $data = json_decode($jsonString);
             if (!$data) {
                 throw new Error("Unable to decode JSON: {$data}");
             }
@@ -124,12 +131,12 @@ class JsonStreamHandlerTest extends TestCase {
             $users[] = $user;
         };
 
-        $fileHandler = new JsonStreamHandler($this->filePath, $readCallback);
-        $fileHandler->parse();
+        $fileHandler = new JsonStreamHandler($this->filePath);
+        $fileHandler->parse($readCallback);
 
         $this->assertCount(3, $users);
         foreach ($users as $index => $user) {
-            $this->assertEquals($this->users[$index], $user);
+            $this->assertEquals((object) $this->users[$index], $user);
         }
     }
 
@@ -137,22 +144,19 @@ class JsonStreamHandlerTest extends TestCase {
     * @test
     */
     public function read_one() {
-        $obj = (object) ['id' => 4, 'name' => 'David', 'age' => 40];
+        $targetUser;
+        $targetId = 2;
+        $fileHandler = new JsonStreamHandler($this->filePath);
 
-        $this->fileHandler->write($obj);
+        $readCallback = function($user) use (&$targetUser, &$targetId, &$fileHandler) {
+            if ($user->id === $targetId) {
+                $targetUser = $user;
+                $fileHandler->close();
+            }
+        };
 
-        $lines = file($this->filePath, FILE_IGNORE_NEW_LINES);
-
-        $this->assertCount(4, $lines);
-        $this->assertEquals($obj, json_decode($lines[3]));
-
-          //     print_r("\n");
-        //     print_r("########################");
-        //     print_r("\n");
-        //     print_r($results);
-        //     print_r("\n");
-        //     print_r("########################");
-        //     print_r("\n");
+        $fileHandler->parse($readCallback);
+        $this->assertEquals((object) $this->users[1], $targetUser);
     }
     
     /**
@@ -160,11 +164,8 @@ class JsonStreamHandlerTest extends TestCase {
     */
     public function write() {
         $obj = (object) ['id' => 4, 'name' => 'David', 'age' => 40];
-
         $this->fileHandler->write($obj);
-
-        $contents = file_get_contents($this->filePath);
-        $lines = explode("\n", trim($contents));
+        $lines = file($this->filePath);
 
         $this->assertCount(4, $lines);
         $this->assertEquals($obj, json_decode($lines[3]));
