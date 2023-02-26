@@ -91,7 +91,7 @@ class JsonStreamHandler {
 class JsonStreamHandlerTest extends TestCase {
     private $filePath = __DIR__ . '/test.json';
     private $fileHandler;
-    private $mockData = [
+    private $users = [
         ['id' => 1, 'name' => 'Alice', 'age' => 25],
         ['id' => 2, 'name' => 'Bob', 'age' => 30],
         ['id' => 3, 'name' => 'Charlie', 'age' => 35]
@@ -102,8 +102,8 @@ class JsonStreamHandlerTest extends TestCase {
         $this->fileHandler = new JsonStreamHandler($this->filePath);
         $this->fileHandler->create();
 
-        foreach ($this->mockData as $obj) {
-            $this->fileHandler->write((object) $obj);
+        foreach ($this->users as $user) {
+            $this->fileHandler->write((object) $user);
         }
     }
   
@@ -113,52 +113,64 @@ class JsonStreamHandlerTest extends TestCase {
         unlink($this->filePath);
       }
     }
-  
-    public function testRead() {
-      $users = [];
-  
-      $readCallback = function($user) use (&$users) {        
-        $users[] = $user;
-      };
-  
-      $fileHandler = new JsonStreamHandler($this->filePath, $readCallback);
-      $fileHandler->parse();
+    
+    /**
+    * @test
+    */
+    public function read_all() {
+        $users = [];
 
+        $readCallback = function($user) use (&$users) {        
+            $users[] = $user;
+        };
 
-    // $contents = file_get_contents($this->filePath);
-    // print_r(json_decode($contents, true));
-    //   $lines = explode("\n", trim($contents));
-  
-    //   $this->assertCount(4, $lines);
-    //   $this->assertEquals($obj, json_decode($lines[3], true));
+        $fileHandler = new JsonStreamHandler($this->filePath, $readCallback);
+        $fileHandler->parse();
 
-        print_r("\n");
-        print_r("########################");
-        print_r("\n");
-        print_r($results);
-        print_r("\n");
-        print_r("########################");
-        print_r("\n");
-  
         $this->assertCount(3, $users);
-  
-    //   $this->assertEquals(['id' => 1, 'name' => 'Alice', 'age' => 25], $results[0]);
-    //   $this->assertEquals(['id' => 2, 'name' => 'Bob', 'age' => 30], $results[1]);
-    //   $this->assertEquals(['id' => 3, 'name' => 'Charlie', 'age' => 35], $results[2]);
+        foreach ($users as $index => $user) {
+            $this->assertEquals($this->users[$index], $user);
+        }
     }
-  
-    // public function testWrite() {
-    //   $obj = ['id' => 4, 'name' => 'David', 'age' => 40];
-  
-    //   JsonStreamHandler::write($this->filePath, $obj);
-  
-    //   $contents = file_get_contents($this->filePath);
-    //   $lines = explode("\n", trim($contents));
-  
-    //   $this->assertCount(4, $lines);
-    //   $this->assertEquals($obj, json_decode($lines[3], true));
-    // }
-  
+
+    /**
+    * @test
+    */
+    public function read_one() {
+        $obj = (object) ['id' => 4, 'name' => 'David', 'age' => 40];
+
+        $this->fileHandler->write($obj);
+
+        $contents = file_get_contents($this->filePath);
+        $lines = explode("\n", trim($contents));
+
+        $this->assertCount(4, $lines);
+        $this->assertEquals($obj, json_decode($lines[3]));
+
+          //     print_r("\n");
+        //     print_r("########################");
+        //     print_r("\n");
+        //     print_r($results);
+        //     print_r("\n");
+        //     print_r("########################");
+        //     print_r("\n");
+    }
+    
+    /**
+    * @test
+    */
+    public function write() {
+        $obj = (object) ['id' => 4, 'name' => 'David', 'age' => 40];
+
+        $this->fileHandler->write($obj);
+
+        $contents = file_get_contents($this->filePath);
+        $lines = explode("\n", trim($contents));
+
+        $this->assertCount(4, $lines);
+        $this->assertEquals($obj, json_decode($lines[3]));
+    }
+    
     // public function testUpdate() {
     //   $patch = [
     //     [
