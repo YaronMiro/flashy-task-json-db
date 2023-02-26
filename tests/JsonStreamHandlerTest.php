@@ -22,7 +22,7 @@ class JsonStreamHandler {
         file_put_contents($this->filePath, '');
     }
 
-    public function process() {
+    public function parse() {
 
         // Exit early in case we can't access the file.
         if (!is_file($this->filePath)) {
@@ -79,7 +79,7 @@ class JsonStreamHandler {
         }
       });
   
-      $handler->process();
+      $handler->parse();
   
       fclose($temp_handle);
       unlink($file_path);
@@ -110,19 +110,19 @@ class JsonStreamHandlerTest extends TestCase {
     public function tearDown(): void {
       // Delete the test file
       if (is_file($this->filePath)) {
-        // unlink($this->filePath);
+        unlink($this->filePath);
       }
     }
   
     public function testRead() {
-      $results = [];
+      $users = [];
   
-      $readCallback = function($data) use (&$results) {        
-        $results[] = $data;
+      $readCallback = function($user) use (&$users) {        
+        $users[] = $user;
       };
   
       $fileHandler = new JsonStreamHandler($this->filePath, $readCallback);
-      $fileHandler->process();
+      $fileHandler->parse();
 
 
     // $contents = file_get_contents($this->filePath);
@@ -140,7 +140,7 @@ class JsonStreamHandlerTest extends TestCase {
         print_r("########################");
         print_r("\n");
   
-    //   $this->assertCount(3, $results);
+        $this->assertCount(3, $users);
   
     //   $this->assertEquals(['id' => 1, 'name' => 'Alice', 'age' => 25], $results[0]);
     //   $this->assertEquals(['id' => 2, 'name' => 'Bob', 'age' => 30], $results[1]);
@@ -177,7 +177,7 @@ class JsonStreamHandlerTest extends TestCase {
     //   };
   
     //   $handler = new JsonStreamHandler($this->filePath, $readCallback);
-    //   $handler->process();
+    //   $handler->parse();
   
     //   $this->assertCount(3, $results);
   
