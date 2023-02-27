@@ -69,7 +69,9 @@ class JsonFileServiceTest extends TestCase {
   */
   public function read_one_item(): void {
     $this->useMockTestJsonInstance();
-    $this->assertEquals($this->records[0], $this->jsonCRUD->read("1")[0]);
+    $records = $this->jsonCRUD->read("1");
+    $this->assertEquals($this->records[0], $records[0]);
+    $this->assertCount(1, $records);
   }
 
   /**

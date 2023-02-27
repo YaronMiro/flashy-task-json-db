@@ -73,16 +73,20 @@ class EntityModelJson implements EntityModelInterface {
      * The return record fields can also be filtered by passing a whitelist
      * of fields.
      * 
-     * @param string|null $id
+     * @param string $id
      * @param array $projection
      * 
      * @return array
      */
-    public function find(string $id = null, array $projection = []): array {
-        $records = $this->jsonCRUD->read();
-        
+    public function find($id = '', array $projection = []): array {
+        $records = [];
+
         // In the case we have a single object.
-        if (!is_null($id) && is_string($id)) {
+        if (!empty($id) && is_string($id)) {
+            $records = $this->jsonCRUD->read($id);
+        // In case we want all existing records.
+        } else {
+            $records = $this->jsonCRUD->read();
         }
 
         // Filter out fields according to a whitelist.

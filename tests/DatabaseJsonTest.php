@@ -119,9 +119,11 @@ class DatabaseJsonTest extends TestCase {
     public function get_record_by_id(): void {
         $userDBModel = $this->createEntity('user');
         $user = $userDBModel->insert((object) ['name' => 'Yaron', 'age' => 35]);
+        $records = $userDBModel->find($user->id);
         $record = $userDBModel->find($user->id)[0];
 
         // Validate that record we got the same record.
+        $this->assertCount(1, $records);
         $this->assertIsObject($record);
         $this->assertEquals($user->id, $record->id);
     }
